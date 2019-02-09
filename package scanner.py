@@ -79,41 +79,8 @@ menu.add_cascade(label="File", menu=fileMenu)
 menu.add_cascade(label="Scan Mode", menu=subMenu)
 
 
-#Menu Taskbar Commands
 
-#start file save
-def file_save():
-    f = filedialog.asksaveasfile(mode='w', defaultextension=".txt",initialdir = "%userprofile%/desktop/",title = "Save file",filetypes = (("Text file","*.txt"),("Excel file","*.xls"),("all files","*.*")))
-    if f is None: # asksaveasfile return `None` if dialog closed with "cancel".
-        return
-    text2saveFurgon = str(furgon.get())
-    f.write("Furgon")
-    f.write("\n")
-    f.write(text2saveFurgon)
-    f.write("\n")
-    f.write("\n")
-    f.write("Total In")
-    #end check if list empty
-
-    f.write("\n")
-    #check if list is empty
-    #if item in storedIn:
-    text2saveIn = str(inCounter)
-    f.write(text2saveIn)
-    f.write("\n")
-    f.write("\n")
-    f.write("Total Out")
-    f.write("\n")
-    #if item in storedOut:
-    text2saveOut = str(outCounter)
-    f.write(text2saveOut)
-    f.write("\n")
-    #f.write("Scan Details")
-    #f.write("\n")
-    #f.write(timestamp)
-    f.close()
-    print(storedIn,storedOut)
-#end file save
+#Scan Modes
 
 def entradaMode():
     global mode
@@ -141,7 +108,7 @@ def salidaMode():
     furgon.grid(row=0, column=9, columnspan=1,sticky=E)
     #
 
-class savetoexcel:
+class saveas:
 
     def save2Excel():
 
@@ -184,13 +151,51 @@ class savetoexcel:
         print("printed from savescan")
         wb.save('Z:/Reciving Almacen/Entradas y Salidas/' + now.strftime("%m-%d-%Y") + '.xls')
 
+    # Menu Taskbar Commands
+
+    # start file save
+    def file_save():
+        f = filedialog.asksaveasfile(mode='w', defaultextension=".txt", initialdir="%userprofile%/desktop/",
+                                     title="Save file",
+                                     filetypes=(("Text file", "*.txt"), ("Excel file", "*.xls"), ("all files", "*.*")))
+        if f is None:  # asksaveasfile return `None` if dialog closed with "cancel".
+            return
+        text2saveFurgon = str(furgon.get())
+        f.write("Furgon")
+        f.write("\n")
+        f.write(text2saveFurgon)
+        f.write("\n")
+        f.write("\n")
+        f.write("Total In")
+        # end check if list empty
+        f.write("\n")
+        # check if list is empty
+        #if item in storedIn:
+
+        text2saveIn = str(inCounter)
+        f.write(text2saveIn)
+        f.write("\n")
+        f.write("\n")
+        f.write("Total Out")
+        f.write("\n")
+        # if item in storedOut:
+        text2saveOut = str(outCounter)
+        f.write(text2saveOut)
+        f.write("\n")
+        # f.write("Scan Details")
+        # f.write("\n")
+        # f.write(timestamp)
+        f.close()
+        print(storedIn, storedOut)
+    # end file save
+
 
 
 subMenu.add_command(label="Entrada", command=entradaMode)
 subMenu.add_command(label="Salida", command=salidaMode)
 
-fileMenu.add_command(label="Save As",command = file_save)
-#fileMenu.add_command(label="Save to Excel",command = savetoexcel.save2Excel)
+fileMenu.add_command(label="Save As",command = saveas.file_save)
+#fileMenu.add_command(label="Save to Excel",command = saveas.save2Excel)
 
 fileMenu.add_command(label="Exit", command=root.quit)
 
@@ -243,7 +248,7 @@ def func(event):
             startRow = startRow + 1
 
             print(storedIn)
-            savetoexcel.saveScan(startRowSave,timestamp)
+            #saveas.saveScan(startRowSave,timestamp)
 
         entry1.delete(0, 'end')
 
@@ -274,6 +279,7 @@ def func(event):
             counterOutLabel.grid(column=9, columnspan=1, row=startRow, sticky=NSEW)
             startRow = startRow + 1
 
+
             if scanIn == scanOut:
                 counterOutLabel.config(fg="green")
                 furgonLabel.config(fg="green")
@@ -298,7 +304,10 @@ def func(event):
 
 
 entradaMode()
+
+
 root.bind('<Return>', func)
+
 
 
 

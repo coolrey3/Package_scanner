@@ -152,7 +152,6 @@ class saveas:
         wb.save('Z:/Reciving Almacen/Entradas y Salidas/' + now.strftime("%m-%d-%Y") + '.xls')
 
     # Menu Taskbar Commands
-
     # start file save
     def file_save():
         f = filedialog.asksaveasfile(mode='w', defaultextension=".txt", initialdir="%userprofile%/desktop/",

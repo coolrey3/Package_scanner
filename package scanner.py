@@ -160,10 +160,13 @@ class saveas:
                                      filetypes=(("Text file", "*.txt"), ("Excel file", "*.xls"), ("all files", "*.*")))
         if f is None:  # asksaveasfile return `None` if dialog closed with "cancel".
             return
-        text2saveFurgon = str(furgon.get())
         f.write("Furgon")
         f.write("\n")
-        f.write(text2saveFurgon)
+        try:
+            text2saveFurgon = str(furgon.get())
+            f.write(text2saveFurgon)
+        except:
+            pass
         f.write("\n")
         f.write("\n")
         f.write("Total In")
@@ -172,21 +175,27 @@ class saveas:
         # check if list is empty
         #if item in storedIn:
 
-        text2saveIn = str(inCounter)
-        f.write(text2saveIn)
+        try:
+            text2saveIn = str(inCounter)
+            f.write(text2saveIn)
+        except:
+            pass
         f.write("\n")
         f.write("\n")
         f.write("Total Out")
         f.write("\n")
         # if item in storedOut:
-        text2saveOut = str(outCounter)
-        f.write(text2saveOut)
+        try:
+            text2saveOut = str(outCounter)
+            f.write(text2saveOut)
+        except:
+            pass
         f.write("\n")
         # f.write("Scan Details")
         # f.write("\n")
         # f.write(timestamp)
         f.close()
-        print(storedIn, storedOut)
+        #print(storedIn, storedOut)
     # end file save
 
 

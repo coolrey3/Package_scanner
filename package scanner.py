@@ -185,7 +185,7 @@ class saveas:
         print("printed from savescan")
 
 
-        wb.save('Z:/Reciving Almacen/Entradas y Salidas/' + now.strftime("%m-%d-%Y") + '.xls')
+        wb.save('Z:/Reciving Almacen/Entradas y Salidas/Scan Log/' + now.strftime("%m-%d-%Y") + '.xls')
 
     # Menu Taskbar Commands
     # start file save

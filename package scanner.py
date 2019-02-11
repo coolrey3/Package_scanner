@@ -113,7 +113,7 @@ class saveas:
     def save2Excel():
 
         style0 = xlwt.easyxf('font: name Times New Roman, color-index red, bold on',
-                         num_format_str='#,##0.00')
+                             num_format_str='#,##0.00')
         style1 = xlwt.easyxf(num_format_str='D-MMM-YY')
 
         wb = xlwt.Workbook()
@@ -121,13 +121,44 @@ class saveas:
         wsLog = wb.add_sheet('Scan Log', cell_overwrite_ok=True)
 
         ws.write(0, 0, "Total In", style0)
-        ws.write(1, 0, str(storedIn) , style1)
-        ws.write(2, 0, )
+        inCounter = Counter(scanIn)
+        inCounter = inCounter.most_common()
+        startRow=1
+        try:
+            for value, count in inCounter:
+                storedIn = value,count
+                #counterLabel = Label(root, text = storedIn)
+                #counterLabel.grid(column=2,columnspan = 1,row = startRow, sticky = NSEW)
+                ws.write(startRow,0 , str(storedIn) , style1)
+                startRow = startRow + 1
+
+
+        except:
+            pass
+        #ws.write(2, 0, )
+
+
         ws.write(0, 1, "Total Out", style0)
-        ws.write(1, 1, str(storedOut))
+
+        try:
+            for value, count in outCounter:
+                storedOut = value, count
+                # counterLabel = Label(root, text = storedIn)
+                # counterLabel.grid(column=2,columnspan = 1,row = startRow, sticky = NSEW)
+                ws.write(1, startRow, str(storedOut))
+                startRow = startRow + 1
+        except:
+            pass
+
+
+
         ws.write(0, 2, "Furgon", style0)
-        ws.write(1, 2, furgonNumber, style1)
-        ws.write(2, 2, xlwt.Formula("A3+B3"))
+        try:
+            text2saveFurgon = str(furgon.get())
+            ws.write(1, 2, text2saveFurgon, style1)
+        except:
+            pass
+        #ws.write(2, 2, xlwt.Formula("A3+B3"))
         wsLog.write(0, 0, "Scan Log", style0)
         wsLog.write(1, 0, timestamp, style1)
         print (content)

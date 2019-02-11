@@ -174,22 +174,38 @@ class saveas:
         # check if list is empty
         #if item in storedIn:
 
-        try:
-            text2saveIn = str(inCounter)
-            f.write(text2saveIn)
+        inCounter = Counter(scanIn)
+        inCounter = inCounter.most_common()
 
-        except:
-            pass
+        startRow = 3
+        for value, count in inCounter:
+            storedIn = value,count
+            #counterLabel = Label(root, text = storedIn)
+            #counterLabel.grid(column=2,columnspan = 1,row = startRow, sticky = NSEW)
+            startRow = startRow + 1
+
+            try:
+                text2saveIn = str(storedIn) + "\n"
+                f.write(text2saveIn)
+
+            except:
+                pass
         f.write("\n")
         f.write("\n")
         f.write("Total Out")
         f.write("\n")
         # if item in storedOut:
-        try:
-            text2saveOut = str(outCounter)
-            f.write(text2saveOut)
-        except:
-            pass
+        for value, count in outCounter:
+            storedOut = value, count
+            # counterLabel = Label(root, text = storedIn)
+            # counterLabel.grid(column=2,columnspan = 1,row = startRow, sticky = NSEW)
+            startRow = startRow + 1
+
+            try:
+                text2saveOut = str(storedOut) + "\n"
+                f.write(text2saveOut)
+            except:
+                pass
         f.write("\n")
         # f.write("Scan Details")
         # f.write("\n")
@@ -204,7 +220,29 @@ subMenu.add_command(label="Entrada", command=entradaMode)
 subMenu.add_command(label="Salida", command=salidaMode)
 
 fileMenu.add_command(label="Save As",command = saveas.file_save)
-#fileMenu.add_command(label="Save to Excel",command = saveas.save2Excel)
+
+
+import sys
+import os
+from tkinter import Tk, Label, Button
+
+def restart_program():
+    #Restarts the current program.
+    #Note: this function does not return. Any cleanup action (like
+    #saving data) must be done before calling this function.
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+
+
+
+
+
+
+
+#root = Tk()
+#fileMenu.add_command(label="Restart",command = restart_program)
+
+fileMenu.add_command(label="Save to Excel",command = saveas.save2Excel)
 
 fileMenu.add_command(label="Exit", command=root.quit)
 

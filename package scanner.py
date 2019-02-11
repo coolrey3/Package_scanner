@@ -117,7 +117,7 @@ class saveas:
         style1 = xlwt.easyxf(num_format_str='D-MMM-YY')
 
         wb = xlwt.Workbook()
-        ws = wb.add_sheet('A Test Sheet', cell_overwrite_ok=True)
+        ws = wb.add_sheet('Package Scanner Totals', cell_overwrite_ok=True)
         #wsLog = wb.add_sheet('Scan Log', cell_overwrite_ok=True)
 
         ws.write(0, 0, "Total In", style0)

@@ -118,7 +118,7 @@ class saveas:
 
         wb = xlwt.Workbook()
         ws = wb.add_sheet('A Test Sheet', cell_overwrite_ok=True)
-        wsLog = wb.add_sheet('Scan Log', cell_overwrite_ok=True)
+        #wsLog = wb.add_sheet('Scan Log', cell_overwrite_ok=True)
 
         ws.write(0, 0, "Total In", style0)
         inCounter = Counter(scanIn)
@@ -140,12 +140,15 @@ class saveas:
 
         ws.write(0, 1, "Total Out", style0)
 
+        startRow=1
+        outCounter = (Counter(scanOut))
+        outCounter = outCounter.most_common()
         try:
             for value, count in outCounter:
                 storedOut = value, count
                 # counterLabel = Label(root, text = storedIn)
                 # counterLabel.grid(column=2,columnspan = 1,row = startRow, sticky = NSEW)
-                ws.write(1, startRow, str(storedOut))
+                ws.write(startRow, 1, str(storedOut))
                 startRow = startRow + 1
         except:
             pass
@@ -159,12 +162,12 @@ class saveas:
         except:
             pass
         #ws.write(2, 2, xlwt.Formula("A3+B3"))
-        wsLog.write(0, 0, "Scan Log", style0)
-        wsLog.write(1, 0, timestamp, style1)
-        print (content)
+        #wsLog.write(0, 0, "Scan Log", style0)
+        #wsLog.write(1, 0, timestamp, style1)
+       #print (content)
 
-
-        wb.save('Z:/Reciving Almacen/Entradas y Salidas/example.xls')
+        filename=  now.strftime("%H-%M_%m-%d-%Y")
+        wb.save('Z:/Reciving Almacen/Entradas y Salidas/ '+ filename +'.xls')
 
     def saveScan(startRowIn, timestamp):
 
@@ -180,6 +183,8 @@ class saveas:
 
         wsLog.write(startRowIn, 0, timestamp, style1)
         print("printed from savescan")
+
+
         wb.save('Z:/Reciving Almacen/Entradas y Salidas/' + now.strftime("%m-%d-%Y") + '.xls')
 
     # Menu Taskbar Commands

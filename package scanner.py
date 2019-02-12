@@ -22,6 +22,10 @@ root.iconbitmap('icon.ico')
 root.title("Package Scanner")
 #tkinter window size
 root.geometry("550x980")
+root2 = Tk()
+scrollbar = Scrollbar(root2)
+scrollbar.pack( side = RIGHT, fill = Y  )
+
 
 
 #Entrada Label

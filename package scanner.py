@@ -231,17 +231,18 @@ class saveas:
         f.write("Total Out")
         f.write("\n")
         # if item in storedOut:
-        for value, count in outCounter:
-            storedOut = value, count
+        try:
+            for value, count in outCounter:
+                storedOut = value, count
             # counterLabel = Label(root, text = storedIn)
             # counterLabel.grid(column=2,columnspan = 1,row = startRow, sticky = NSEW)
-            startRow = startRow + 1
+                startRow = startRow + 1
 
-            try:
+
                 text2saveOut = str(storedOut) + "\n"
                 f.write(text2saveOut)
-            except:
-                pass
+        except:
+            pass
         f.write("\n")
         # f.write("Scan Details")
         # f.write("\n")

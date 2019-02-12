@@ -21,7 +21,7 @@ root.iconbitmap('icon.ico')
 #tkinter window title
 root.title("Package Scanner")
 #tkinter window size
-root.geometry("550x500")
+root.geometry("550x980")
 
 
 #Entrada Label
@@ -318,7 +318,7 @@ def func(event):
 
 
 
-        inLabel.grid(sticky=NSEW, column=0,row=startRowIn)
+        inLabel.grid(sticky=NSEW, column=0,row=3)#startRowIn
         global inCounter
         inCounter = Counter(scanIn)
         inCounter = inCounter.most_common()
@@ -347,7 +347,7 @@ def func(event):
             outCount += 1
             startRowOut = startRowOut + 1
 
-        outLabel.grid(sticky=W, column=7,row=startRowOut)
+        outLabel.grid(sticky=W, column=7,row=3)#startRowOut
 
         entry1.delete(0, 'end')
 

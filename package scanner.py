@@ -21,7 +21,7 @@ root.iconbitmap('icon.ico')
 #tkinter window title
 root.title("Package Scanner")
 #tkinter window size
-root.geometry("550x580")
+root.geometry("500x580")
 
 #scrollbar code
 #root2 = Tk()

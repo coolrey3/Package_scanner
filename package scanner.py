@@ -21,10 +21,29 @@ root.iconbitmap('icon.ico')
 #tkinter window title
 root.title("Package Scanner")
 #tkinter window size
-root.geometry("550x980")
-root2 = Tk()
-scrollbar = Scrollbar(root2)
-scrollbar.pack( side = RIGHT, fill = Y  )
+root.geometry("550x580")
+
+#scrollbar code
+#root2 = Tk()
+scrollbar = Scrollbar(root)
+
+scrollbar.grid( sticky = E)#side = RIGHT, fill = Y  )
+
+mylistIn = Listbox(root, yscrollcommand = scrollbar.set,height=30 )
+scrollbar.config( command = mylistIn.yview )
+
+mylistOut = Listbox(root, yscrollcommand = scrollbar.set ,height=30)
+
+mylistTotalIn = Listbox(root, yscrollcommand = scrollbar.set,height=30 )
+mylistTotalOut = Listbox(root, yscrollcommand = scrollbar.set )
+#for line in range(500):
+ #  mylistIn.insert(END, "This is line number " + str(line))
+
+mylistIn.grid(sticky=NSEW, column=0,row=3 )#side = LEFT, fill = BOTH )
+mylistOut.grid(sticky=W, column=7,row=3 )#side = LEFT, fill = BOTH )
+
+mylistTotalIn.grid(column=2,columnspan = 1,row = 3, sticky = NSEW )#side = LEFT, fill = BOTH )
+mylistTotalOut.grid(column=8, columnspan=1, row=3, sticky=NSEW )#side = LEFT, fill = BOTH )
 
 
 
@@ -38,7 +57,7 @@ quantityLabel.grid(row = 2, column = 2 , sticky = NSEW, columnspan = 1)
 
 #Total Out Label
 quantityOutLabel = Label(root, text="Total Out",width=15)
-quantityOutLabel.grid(row = 2, column = 9 , sticky = NSEW, columnspan = 1)
+quantityOutLabel.grid(row = 2, column = 8 , sticky = NSEW, columnspan = 1)
 
 #Instructions to scan Label
 entry1Label = Label(root, text="Scan Package:")
@@ -106,10 +125,10 @@ def salidaMode():
 
     # Furgon Entry Field
     furgonLabel = Label(root, text="Furgon: ")
-    furgonLabel.grid(row=0, column= 8, sticky=E,columnspan=1)
+    furgonLabel.grid(row=0, column= 7, sticky=E,columnspan=1)
     furgon = Entry(root)
     furgonNumber = furgon.get()
-    furgon.grid(row=0, column=9, columnspan=1,sticky=E)
+    furgon.grid(row=0, column=8, columnspan=1,sticky=E)
     #
 
 class saveas:
@@ -274,17 +293,10 @@ def restart_program():
     python = sys.executable
     os.execl(python, python, * sys.argv)
 
-
-
-
-
-
-
 #root = Tk()
 #fileMenu.add_command(label="Restart",command = restart_program)
 
 fileMenu.add_command(label="Save to Excel",command = saveas.save2Excel)
-
 fileMenu.add_command(label="Exit", command=root.quit)
 
 
@@ -320,19 +332,23 @@ def func(event):
             inCount += 1
             inLabel.grid_forget()
             startRowIn = startRowIn + 1
+        mylistIn.insert(END, i )
 
+       #inLabel.grid(sticky=NSEW, column=0,row=3)#startRowIn
 
-
-        inLabel.grid(sticky=NSEW, column=0,row=3)#startRowIn
         global inCounter
         inCounter = Counter(scanIn)
         inCounter = inCounter.most_common()
+
+        mylistTotalIn.delete(0, END)
 
         startRow = 3
         for value, count in inCounter:
             storedIn = value, "-" ,count
             counterLabel = Label(root, text = storedIn)
-            counterLabel.grid(column=2,columnspan = 1,row = startRow, sticky = NSEW)
+           # counterLabel.grid(column=2,columnspan = 1,row = startRow, sticky = NSEW)
+            mylistTotalIn.insert(END, storedIn)
+
             startRow = startRow + 1
 
             print(storedIn)
@@ -352,7 +368,9 @@ def func(event):
             outCount += 1
             startRowOut = startRowOut + 1
 
-        outLabel.grid(sticky=W, column=7,row=3)#startRowOut
+        #outLabel.grid(sticky=W, column=7,row=3)#startRowOut
+        mylistOut.insert(END, i )
+
 
         entry1.delete(0, 'end')
 
@@ -360,12 +378,16 @@ def func(event):
         outCounter = (Counter(scanOut))
         outCounter = outCounter.most_common()
 
+        mylistTotalOut.delete(0, END)
+
         startRow = 3
         for value, count in outCounter:
             storedOut = value, "-", count
-            counterOutLabel = Label(root, text=storedOut,width=15)
-            counterOutLabel.grid(column=9, columnspan=1, row=startRow, sticky=NSEW)
+            #counterOutLabel = Label(root, text=storedOut,width=15)
+            #counterOutLabel.grid(column=9, columnspan=1, row=startRow, sticky=NSEW)
             startRow = startRow + 1
+            mylistTotalOut.insert(END, storedOut)
+
 
 
             if scanIn == scanOut:

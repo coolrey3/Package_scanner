@@ -332,7 +332,7 @@ def func(event):
             inCount += 1
             inLabel.grid_forget()
             startRowIn = startRowIn + 1
-        mylistIn.insert(END, i )
+        mylistIn.insert(0, i )
 
        #inLabel.grid(sticky=NSEW, column=0,row=3)#startRowIn
 
@@ -369,7 +369,7 @@ def func(event):
             startRowOut = startRowOut + 1
 
         #outLabel.grid(sticky=W, column=7,row=3)#startRowOut
-        mylistOut.insert(END, i )
+        mylistOut.insert(0, i )
 
 
         entry1.delete(0, 'end')

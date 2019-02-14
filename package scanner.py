@@ -4,6 +4,10 @@
 from tkinter import *
 from tkinter import filedialog
 from collections import Counter
+from tkinter import Tk, Label, Button
+from tkinter.filedialog import askopenfilename
+import sys
+import os
 import datetime
 import xlrd
 import xlwt
@@ -15,34 +19,30 @@ print (now.strftime("%m-%d-%Y"))
 
 #tkinter window
 root = Tk()
-
 root.iconbitmap('icon.ico')
-
 #tkinter window title
 root.title("Package Scanner")
 #tkinter window size
 root.geometry("500x580")
 
 #scrollbar code
-#root2 = Tk()
 scrollbar = Scrollbar(root)
-
 scrollbar.grid( sticky = E)#side = RIGHT, fill = Y  )
-
+#Scan In log
 mylistIn = Listbox(root, yscrollcommand = scrollbar.set,height=30 )
+mylistIn.grid(sticky=NSEW, column=0,row=3 )#side = LEFT, fill = BOTH )
 scrollbar.config( command = mylistIn.yview )
 
+#Scan Out Log
 mylistOut = Listbox(root, yscrollcommand = scrollbar.set ,height=30)
-
-mylistTotalIn = Listbox(root, yscrollcommand = scrollbar.set,height=30 )
-mylistTotalOut = Listbox(root, yscrollcommand = scrollbar.set )
-#for line in range(500):
- #  mylistIn.insert(END, "This is line number " + str(line))
-
-mylistIn.grid(sticky=NSEW, column=0,row=3 )#side = LEFT, fill = BOTH )
 mylistOut.grid(sticky=W, column=7,row=3 )#side = LEFT, fill = BOTH )
 
+#Total scanned in
+mylistTotalIn = Listbox(root, yscrollcommand = scrollbar.set,height=30 )
 mylistTotalIn.grid(column=2,columnspan = 1,row = 3, sticky = NSEW )#side = LEFT, fill = BOTH )
+
+#Total scanned Out
+mylistTotalOut = Listbox(root, yscrollcommand = scrollbar.set )
 mylistTotalOut.grid(column=8, columnspan=1, row=3, sticky=NSEW )#side = LEFT, fill = BOTH )
 
 
@@ -67,20 +67,10 @@ entry1Label.grid(row = 0, column = 0 , sticky = NSEW)
 salidaLabel = Label(root, text="Salida",width=15)
 salidaLabel.grid(row = 2, column = 7 , sticky = NSEW, columnspan = 1)
 
-
-#save and send buttons
-button1 = Button(root,text = 'Save', fg='green')
-button2 = Button(root,text = 'Send', fg='red')
-#button1.grid(row=3,column=0)
-#button2.grid(row = 3 , column = 1)
-
 #Scanner Entry Field
 entry1 = Entry(root)
 entry1.grid(row = 0,column = 2,columnspan = 3)
 entry1.focus_set()
-
-quitButton = Button(root,text="Quit", command = root.quit )
-#quitButton.grid(row=1,column=12)
 
 # Furgon Entry Field
 furgonLabel = Label(root, text="Furgon: ")
@@ -88,9 +78,6 @@ furgonLabel.grid(row=0, column=7, sticky=E, columnspan=1)
 furgon = Entry(root)
 furgonNumber = furgon.get()
 furgon.grid(row=0, column=8, columnspan=1, sticky=E)
-#
-
-
 
 #Define Variables and Arrays
 scanIn = []
@@ -100,7 +87,6 @@ startRow = 3
 inCount=0
 outCount=0
 
-
 #Menu Taskbar
 menu = Menu(root)
 root.config(menu=menu)
@@ -109,10 +95,7 @@ fileMenu = Menu(menu)
 menu.add_cascade(label="File", menu=fileMenu)
 menu.add_cascade(label="Scan Mode", menu=subMenu)
 
-
-
 #Scan Modes
-
 def entradaMode():
     global mode
     print("Entrada Selected")
@@ -121,8 +104,8 @@ def entradaMode():
     select.grid(row=0, columnspan=2, sticky=NSEW)
 
 def salidaMode():
+    global mode
     print("Salida Selected")
-
     mode = "Salida"
     select = Label(root, text="Scan mode: " + mode, fg='red',width = 17)
     select.grid(row=0, columnspan=2, sticky=NSEW)
@@ -272,17 +255,21 @@ class saveas:
         #print(storedIn, storedOut)
     # end file save
 
+def open():
+    print("opened file")
+    filename = askopenfilename()
+    print(filename)
 
+#File Menu List
+fileMenu.add_command(label="Open",command = open)
+fileMenu.add_command(label="Save As",command = saveas.file_save)
+fileMenu.add_command(label="Save to Excel",command = saveas.save2Excel)
+fileMenu.add_command(label="Exit", command=root.quit)
 
+#Scan Menu List
 subMenu.add_command(label="Entrada", command=entradaMode)
 subMenu.add_command(label="Salida", command=salidaMode)
 
-fileMenu.add_command(label="Save As",command = saveas.file_save)
-
-
-import sys
-import os
-from tkinter import Tk, Label, Button
 
 def restart_program():
     #Restarts the current program.
@@ -294,25 +281,18 @@ def restart_program():
 #root = Tk()
 #fileMenu.add_command(label="Restart",command = restart_program)
 
-fileMenu.add_command(label="Save to Excel",command = saveas.save2Excel)
-fileMenu.add_command(label="Exit", command=root.quit)
-
-
 mode = ""
 content = entry1.get()
 timestamp = "Package " + content + " Scanned at " + now.strftime("%m-%d-%Y %H:%M")
-
-subMenu.add_separator()
+#subMenu.add_separator()
 
 def func(event):
-
-
+    mode = ""
     global inCount
     global outCount
     global storedIn
     global storedOut
     content = entry1.get()
-
 
     if content == "":
         print("No Package Scanned")
@@ -321,10 +301,9 @@ def func(event):
     elif mode == "Entrada":
         timestamp = "Package " + content + " Scanned at " + now.strftime("%m-%d-%Y %H:%M")
         print( timestamp)
-
         scanIn.append(content)
-
         startRowIn = 2
+
         for i in scanIn:
             inLabel = Label(root, text=i)
             inCount += 1
@@ -333,11 +312,9 @@ def func(event):
         mylistIn.insert(0, i )
 
        #inLabel.grid(sticky=NSEW, column=0,row=3)#startRowIn
-
         global inCounter
         inCounter = Counter(scanIn)
         inCounter = inCounter.most_common()
-
         mylistTotalIn.delete(0, END)
 
         startRow = 3
@@ -346,9 +323,7 @@ def func(event):
             counterLabel = Label(root, text = storedIn)
            # counterLabel.grid(column=2,columnspan = 1,row = startRow, sticky = NSEW)
             mylistTotalIn.insert(END, storedIn)
-
             startRow = startRow + 1
-
             print(storedIn)
             #saveas.saveScan(startRowSave,timestamp)
 
@@ -358,6 +333,7 @@ def func(event):
     else:
         print( "Package " + content + " Scanned at " + now.strftime("%m-%d-%Y %H:%M"))
         scanOut.append(content)
+        mode = "Salida"
 
         startRowOut = 2
         for i in scanOut:
@@ -368,17 +344,14 @@ def func(event):
 
         #outLabel.grid(sticky=W, column=7,row=3)#startRowOut
         mylistOut.insert(0, i )
-
-
         entry1.delete(0, 'end')
 
         global outCounter
         outCounter = (Counter(scanOut))
         outCounter = outCounter.most_common()
-
         mylistTotalOut.delete(0, END)
-
         startRow = 3
+
         for value, count in outCounter:
             storedOut = value, "-", count
             #counterOutLabel = Label(root, text=storedOut,width=15)
@@ -386,37 +359,26 @@ def func(event):
             startRow = startRow + 1
             mylistTotalOut.insert(END, storedOut)
 
-
-
             if scanIn == scanOut:
                 counterOutLabel.config(fg="green")
                 furgonLabel.config(fg="green")
 
-
         entry1.delete(0, 'end')
 
-
-
-
-
-    #inCounter = Counter(scanIn)
-    #inCounter = inCounter.most_common()
- #   for value, count in inCounter:
-
-  #       print(value, count)
-
-
-   # totalInLabel = Label(root, text=inCounter)
-  #  totalInLabel.grid(row= 3, column = 8)
-
-
+def switchMode(event):
+    print("Switching scan mode from " + mode)
+    if mode == "Salida":
+        entradaMode()
+    else:
+        salidaMode()
 
 entradaMode()
-
-
 root.bind('<Return>', func)
-
-
-
-
+root.bind('<Control_L>',switchMode)
 root.mainloop()
+
+#save and send buttons
+#button1 = Button(root,text = 'Save', fg='green')
+#button2 = Button(root,text = 'Send', fg='red')
+#button1.grid(row=3,column=0)
+#button2.grid(row = 3 , column = 1)

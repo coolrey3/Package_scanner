@@ -82,6 +82,14 @@ entry1.focus_set()
 quitButton = Button(root,text="Quit", command = root.quit )
 #quitButton.grid(row=1,column=12)
 
+# Furgon Entry Field
+furgonLabel = Label(root, text="Furgon: ")
+furgonLabel.grid(row=0, column=7, sticky=E, columnspan=1)
+furgon = Entry(root)
+furgonNumber = furgon.get()
+furgon.grid(row=0, column=8, columnspan=1, sticky=E)
+#
+
 
 
 #Define Variables and Arrays
@@ -114,22 +122,12 @@ def entradaMode():
 
 def salidaMode():
     print("Salida Selected")
-    global mode
-    global furgon
-    global furgonNumber
-    global furgonLabel
 
     mode = "Salida"
     select = Label(root, text="Scan mode: " + mode, fg='red',width = 17)
     select.grid(row=0, columnspan=2, sticky=NSEW)
 
-    # Furgon Entry Field
-    furgonLabel = Label(root, text="Furgon: ")
-    furgonLabel.grid(row=0, column= 7, sticky=E,columnspan=1)
-    furgon = Entry(root)
-    furgonNumber = furgon.get()
-    furgon.grid(row=0, column=8, columnspan=1,sticky=E)
-    #
+
 
 class saveas:
 

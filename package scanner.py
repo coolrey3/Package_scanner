@@ -116,10 +116,8 @@ class saveas:
 
     def save2Excel():
 
-        style0 = xlwt.easyxf('font: name Times New Roman, color-index red, bold on',
-                             num_format_str='#,##0.00')
+        style0 = xlwt.easyxf('font: name Times New Roman, color-index red, bold on',num_format_str='#,##0.00')
         style1 = xlwt.easyxf(num_format_str='D-MMM-YY')
-
         wb = xlwt.Workbook()
         ws = wb.add_sheet('Package Scanner Totals', cell_overwrite_ok=True)
         #wsLog = wb.add_sheet('Scan Log', cell_overwrite_ok=True)
@@ -136,12 +134,9 @@ class saveas:
                 ws.write(startRow,0 , str(storedIn) , style1)
                 startRow = startRow + 1
 
-
         except:
             pass
         #ws.write(2, 0, )
-
-
         ws.write(0, 1, "Total Out", style0)
 
         startRow=1
@@ -156,8 +151,6 @@ class saveas:
                 startRow = startRow + 1
         except:
             pass
-
-
 
         ws.write(0, 2, "Furgon", style0)
         try:

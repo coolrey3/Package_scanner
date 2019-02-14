@@ -287,7 +287,7 @@ timestamp = "Package " + content + " Scanned at " + now.strftime("%m-%d-%Y %H:%M
 #subMenu.add_separator()
 
 def func(event):
-    mode = ""
+    global mode
     global inCount
     global outCount
     global storedIn
@@ -328,7 +328,6 @@ def func(event):
             #saveas.saveScan(startRowSave,timestamp)
 
         entry1.delete(0, 'end')
-
 
     else:
         print( "Package " + content + " Scanned at " + now.strftime("%m-%d-%Y %H:%M"))
@@ -372,9 +371,9 @@ def switchMode(event):
     else:
         salidaMode()
 
-entradaMode()
 root.bind('<Return>', func)
 root.bind('<Control_L>',switchMode)
+entradaMode()
 root.mainloop()
 
 #save and send buttons

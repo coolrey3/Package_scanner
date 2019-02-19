@@ -110,8 +110,6 @@ def salidaMode():
     select = Label(root, text="Scan mode: " + mode, fg='red',width = 17)
     select.grid(row=0, columnspan=2, sticky=NSEW)
 
-
-
 class saveas:
 
     def save2Excel():
@@ -254,7 +252,7 @@ def open():
     print(filename)
 
 #File Menu List
-fileMenu.add_command(label="Open",command = open)
+#fileMenu.add_command(label="Open",command = open)
 fileMenu.add_command(label="Save As",command = saveas.file_save)
 fileMenu.add_command(label="Save to Excel",command = saveas.save2Excel)
 fileMenu.add_command(label="Exit", command=root.quit)

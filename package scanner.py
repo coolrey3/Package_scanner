@@ -92,8 +92,10 @@ menu = Menu(root)
 root.config(menu=menu)
 subMenu = Menu(menu)
 fileMenu = Menu(menu)
+selection = Menu(menu)
 menu.add_cascade(label="File", menu=fileMenu)
 menu.add_cascade(label="Scan Mode", menu=subMenu)
+menu.add_cascade(label="Selection", menu=selection)
 
 #Scan Modes
 def entradaMode():
@@ -261,6 +263,11 @@ fileMenu.add_command(label="Exit", command=root.quit)
 subMenu.add_command(label="Entrada", command=entradaMode)
 subMenu.add_command(label="Salida", command=salidaMode)
 
+#Selection menu
+selection.add_command(label="Delete", command="")
+
+
+
 
 def restart_program():
     #Restarts the current program.
@@ -361,6 +368,42 @@ def switchMode(event):
         entradaMode()
     else:
         salidaMode()
+
+
+def onDouble(event):
+    widget = event.widget
+    selection=widget.curselection()
+    value = widget.get(selection[0])
+    print (value)
+
+def do_popup(event):
+    # display the popup menu
+    try:
+        fileMenu.tk_popup(event.x_root, event.y_root, 0)
+    finally:
+        # make sure to release the grab (Tk 8.0a1 only)
+        fileMenu.grab_release()
+
+try:
+    mylistIn.bind("<Double-Button-1>", onDouble )
+except:
+    pass
+
+try:
+    mylistTotalIn.bind("<Double-Button-1>", onDouble)  #<<ListboxSelect>>
+except:
+    pass
+try:
+    mylistOut.bind("<Double-Button-3>", do_popup)
+except:
+    pass
+
+try:
+    mylistTotalOut.bind("<Double-Button-3>", do_popup)
+except:
+    pass
+
+
 
 root.bind('<Return>', func)
 root.bind('<Control_L>',switchMode)

@@ -263,9 +263,6 @@ fileMenu.add_command(label="Exit", command=root.quit)
 subMenu.add_command(label="Entrada", command=entradaMode)
 subMenu.add_command(label="Salida", command=salidaMode)
 
-#Selection menu
-selection.add_command(label="Delete", command="")
-
 
 
 
@@ -362,6 +359,38 @@ def func(event):
 
         entry1.delete(0, 'end')
 
+
+def delete():
+    try:
+
+        print('printed from delete')
+        #
+        # widget = event.widget
+        # selection=widget.curselection()
+        # value = widget.get(selection[0])
+        print (value)
+        print(scanIn)
+        if value in scanIn:
+            print('value found')
+            scanIn.remove(value)
+
+            mylistIn.delete(value)
+
+
+        else:
+            print('value not found')
+    except:
+        pass
+    scanIn.sort
+
+
+try:
+    # Selection menu
+    selection.add_command(label="Delete", command=delete)
+except:
+    pass
+
+
 def switchMode(event):
     print("Switching scan mode from " + mode)
     if mode == "Salida":
@@ -371,6 +400,7 @@ def switchMode(event):
 
 
 def onDouble(event):
+    global value
     widget = event.widget
     selection=widget.curselection()
     value = widget.get(selection[0])
@@ -379,10 +409,10 @@ def onDouble(event):
 def do_popup(event):
     # display the popup menu
     try:
-        fileMenu.tk_popup(event.x_root, event.y_root, 0)
+        selection.tk_popup(event.x_root, event.y_root, 0)
     finally:
         # make sure to release the grab (Tk 8.0a1 only)
-        fileMenu.grab_release()
+        selection.grab_release()
 
 try:
     mylistIn.bind("<Double-Button-1>", onDouble )
@@ -394,12 +424,16 @@ try:
 except:
     pass
 try:
-    mylistOut.bind("<Double-Button-3>", do_popup)
+    mylistOut.bind("<Double-Button-1>", onDouble )
+
+    mylistOut.bind("<Button-3>", do_popup)
 except:
     pass
 
 try:
-    mylistTotalOut.bind("<Double-Button-3>", do_popup)
+    mylistTotalOut.bind("<Double-Button-1>", onDouble )
+
+    mylistTotalOut.bind("<Button-3>", do_popup)
 except:
     pass
 

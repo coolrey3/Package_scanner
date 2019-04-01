@@ -23,7 +23,7 @@ root.iconbitmap('icon.ico')
 #tkinter window title
 root.title("Package Scanner")
 #tkinter window size
-root.geometry("500x580")
+root.geometry("500x600")
 
 #scrollbar code
 scrollbar = Scrollbar(root)
@@ -90,13 +90,18 @@ outCount=0
 #Menu Taskbar
 menu = Menu(root)
 root.config(menu=menu)
-subMenu = Menu(menu)
-fileMenu = Menu(menu)
-selection = Menu(menu)
+subMenu = Menu(menu,tearoff=False)
+fileMenu = Menu(menu,tearoff=False)
+
+selectionIn = Menu(menu,tearoff=False)
+selectionOut = Menu(menu,tearoff=False)
 menu.add_cascade(label="File", menu=fileMenu)
 menu.add_cascade(label="Scan Mode", menu=subMenu)
-menu.add_cascade(label="Selection", menu=selection)
+menu.add_cascade(label="Selection", menu=selectionIn)
+menu.add_cascade(label="Selection", menu=selectionOut)
 
+currentSelection = Label(root, text = "Current Selection:  " )
+currentSelection.grid(row = 10)
 #Scan Modes
 def entradaMode():
     global mode
@@ -360,7 +365,7 @@ def func(event):
         entry1.delete(0, 'end')
 
 
-def delete():
+def deleteIn():
     try:
 
         print('printed from delete')
@@ -368,27 +373,94 @@ def delete():
         # widget = event.widget
         # selection=widget.curselection()
         # value = widget.get(selection[0])
-        print (value)
         print(scanIn)
         if value in scanIn:
-            print('value found')
+            print('value found :' + value)
+            print("Now Removing")
             scanIn.remove(value)
+            # mylistIn.remove(value)
+            print(mylistIn.curselection())
+            mylistIn.delete(mylistIn.curselection())
 
-            mylistIn.delete(value)
+
+
+
+            # if event.widget.get(event.widget.curselection()[0]) == value:
+
+
+            # inCount.update
+            # outCount.update
+
+            print(storedOut)
+            print(mylistIn)
+            # scanIn.sort
+
+
 
 
         else:
             print('value not found')
     except:
         pass
-    scanIn.sort
+    # scanIn.sort
 
 
 try:
     # Selection menu
-    selection.add_command(label="Delete", command=delete)
+    selectionIn.add_command(label="Delete In", command=delete)
+    selectionOut.add_command(label="Delete Out", command=delete)
+
+
 except:
     pass
+
+def deleteOut():
+    try:
+
+        print('printed from delete Out')
+        #
+        # widget = event.widget
+        # selection=widget.curselection()
+        # value = widget.get(selection[0])
+        print(scanIn)
+        if value in scanIn:
+            print('value found :' + value)
+            print("Now Removing")
+            scanIn.remove(value)
+            # mylistIn.remove(value)
+            print(mylistIn.curselection())
+            mylistIn.delete(mylistIn.curselection())
+
+
+
+
+            # if event.widget.get(event.widget.curselection()[0]) == value:
+
+
+            # inCount.update
+            # outCount.update
+
+            print(storedOut)
+            print(mylistIn)
+            # scanIn.sort
+
+
+
+
+        else:
+            print('value not found')
+    except:
+        pass
+    # scanIn.sort
+
+
+try:
+    # Selection menu
+    selection.add_command(label="Delete", command=deleteIn)
+except:
+    pass
+
+
 
 
 def switchMode(event):
@@ -406,36 +478,55 @@ def onDouble(event):
     value = widget.get(selection[0])
     print (value)
 
-def do_popup(event):
+
+    currentSelection = Label(root, text="Current Selection:  " + value)
+    currentSelection.grid(row=10)
+
+
+
+
+def OutIn(event):
     # display the popup menu
     try:
-        selection.tk_popup(event.x_root, event.y_root, 0)
+        selectionIn.tk_popup(event.x_root, event.y_root, 0)
     finally:
         # make sure to release the grab (Tk 8.0a1 only)
-        selection.grab_release()
+        selectionIn.grab_release()
+
+def do_popupOut(event):
+    # display the popup menu
+    try:
+        selectionOut.tk_popup(event.x_root, event.y_root, 0)
+    finally:
+        # make sure to release the grab (Tk 8.0a1 only)
+        selectionOut.grab_release()
+
 
 try:
     mylistIn.bind("<Double-Button-1>", onDouble )
+    mylistIn.bind("<Button-3>", do_popupIn)
+
 except:
     pass
 
-try:
-    mylistTotalIn.bind("<Double-Button-1>", onDouble)  #<<ListboxSelect>>
-except:
-    pass
+# try:
+#     mylistTotalIn.bind("<Double-Button-1>", onDouble)  #<<ListboxSelect>>
+# except:
+#     pass
+
 try:
     mylistOut.bind("<Double-Button-1>", onDouble )
 
-    mylistOut.bind("<Button-3>", do_popup)
+    mylistOut.bind("<Button-3>", do_popupOut)
 except:
     pass
-
-try:
-    mylistTotalOut.bind("<Double-Button-1>", onDouble )
-
-    mylistTotalOut.bind("<Button-3>", do_popup)
-except:
-    pass
+#
+# try:
+#     mylistTotalOut.bind("<Double-Button-1>", onDouble )
+#
+#     mylistTotalOut.bind("<Button-3>", do_popup)
+# except:
+#     pass
 
 
 

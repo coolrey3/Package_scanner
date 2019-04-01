@@ -97,11 +97,11 @@ selectionIn = Menu(menu,tearoff=False)
 selectionOut = Menu(menu,tearoff=False)
 menu.add_cascade(label="File", menu=fileMenu)
 menu.add_cascade(label="Scan Mode", menu=subMenu)
-menu.add_cascade(label="Selection", menu=selectionIn)
-menu.add_cascade(label="Selection", menu=selectionOut)
+# menu.add_cascade(label="Delete", menu=selectionIn)
+# menu.add_cascade(label="Selection", menu=selectionOut)
 
-currentSelection = Label(root, text = "Current Selection:  " )
-currentSelection.grid(row = 10)
+currentSelection = Label(root, text = "Selection:  " ,fg = "white",bg = "black",width=20)
+currentSelection.grid(row = 10,sticky='W')
 #Scan Modes
 def entradaMode():
     global mode
@@ -407,8 +407,8 @@ def deleteIn():
 
 try:
     # Selection menu
-    selectionIn.add_command(label="Delete In", command=delete)
-    selectionOut.add_command(label="Delete Out", command=delete)
+    # selectionIn.add_command(label="Delete In", command=deleteIn)
+    selectionOut.add_command(label="Delete Out", command=deleteOut)
 
 
 except:
@@ -423,13 +423,13 @@ def deleteOut():
         # selection=widget.curselection()
         # value = widget.get(selection[0])
         print(scanIn)
-        if value in scanIn:
+        if value in scanOut:
             print('value found :' + value)
             print("Now Removing")
-            scanIn.remove(value)
+            scanOut.remove(value)
             # mylistIn.remove(value)
-            print(mylistIn.curselection())
-            mylistIn.delete(mylistIn.curselection())
+            print(mylistOut.curselection())
+            mylistOut.delete(mylistOut.curselection())
 
 
 
@@ -441,7 +441,7 @@ def deleteOut():
             # outCount.update
 
             print(storedOut)
-            print(mylistIn)
+            print(mylistOut)
             # scanIn.sort
 
 
@@ -456,10 +456,15 @@ def deleteOut():
 
 try:
     # Selection menu
-    selection.add_command(label="Delete", command=deleteIn)
+    selectionIn.add_command(label="Delete In", command=deleteIn)
 except:
     pass
 
+try:
+    # Selection menu
+    selectionOut.add_command(label="Delete Out", command=deleteOut)
+except:
+    pass
 
 
 
@@ -479,13 +484,14 @@ def onDouble(event):
     print (value)
 
 
-    currentSelection = Label(root, text="Current Selection:  " + value)
-    currentSelection.grid(row=10)
+    currentSelection = Label(root, text="Selection: " + value, fg = "white",bg = "black",width=19)
+    currentSelection.grid_forget()
+    currentSelection.grid(row=10, sticky = 'W')
 
 
 
 
-def OutIn(event):
+def do_popupIn(event):
     # display the popup menu
     try:
         selectionIn.tk_popup(event.x_root, event.y_root, 0)

@@ -455,7 +455,7 @@ def deleteOut():
 
             newtemp = mylistTotalOut
 
-            mylistTotalOut.delete(0, END)
+            # mylistTotalOut.delete(0, END)
 
             # for value, count in outCounter:
             #     storedOut = value, "-", count

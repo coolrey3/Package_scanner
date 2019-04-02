@@ -430,6 +430,10 @@ def deleteOut():
             # mylistIn.remove(value)
             print(mylistOut.curselection())
             mylistOut.delete(mylistOut.curselection())
+            # mylistTotalOut.insert(0, " ")
+            # mylistOut.delete(0, 0)
+            # mylistTotalOut.insert(0, "filler")
+            # mylistTotalOut.delete(0,0)
 
 
 
@@ -439,16 +443,42 @@ def deleteOut():
 
             # inCount.update
             # outCount.update
+            print('this is before')
+
 
             print(storedOut)
             print(mylistOut)
             # scanIn.sort
 
 
+            func('<RETURN>')
+
+            newtemp = mylistTotalOut
+
+            mylistTotalOut.delete(0, END)
+
+            # for value, count in outCounter:
+            #     storedOut = value, "-", count
+            #     # counterOutLabel = Label(root, text=storedOut,width=15)
+            #     # counterOutLabel.grid(column=9, columnspan=1, row=startRow, sticky=NSEW)
+            #     startRow = startRow + 1
+            #     mylistTotalOut.insert(END, storedOut)
+
+            # mylistTotalOut.insert(0, 'test')
+
+            print('this is it')
+
+
+
+
+
 
 
         else:
             print('value not found')
+
+        # func('<RETURN>')
+
     except:
         pass
     # scanIn.sort

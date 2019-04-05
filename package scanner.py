@@ -29,13 +29,13 @@ root.geometry("500x600")
 scrollbar = Scrollbar(root)
 scrollbar.grid( sticky = E)#side = RIGHT, fill = Y  )
 #Scan In log
-mylistIn = Listbox(root, yscrollcommand = scrollbar.set,height=30 )
-mylistIn.grid(sticky=NSEW, column=0,row=3 )#side = LEFT, fill = BOTH )
-scrollbar.config( command = mylistIn.yview )
+list_in = Listbox(root, yscrollcommand = scrollbar.set, height=30)
+list_in.grid(sticky=NSEW, column=0, row=3)#side = LEFT, fill = BOTH )
+scrollbar.config(command = list_in.yview)
 
 #Scan Out Log
-mylistOut = Listbox(root, yscrollcommand = scrollbar.set ,height=30)
-mylistOut.grid(sticky=W, column=7,row=3 )#side = LEFT, fill = BOTH )
+list_out = Listbox(root, yscrollcommand = scrollbar.set, height=30)
+list_out.grid(sticky=W, column=7, row=3)#side = LEFT, fill = BOTH )
 
 #Total scanned in
 mylistTotalIn = Listbox(root, yscrollcommand = scrollbar.set,height=30 )
@@ -93,8 +93,8 @@ root.config(menu=menu)
 subMenu = Menu(menu,tearoff=False)
 fileMenu = Menu(menu,tearoff=False)
 
-selectionIn = Menu(menu,tearoff=False)
-selectionOut = Menu(menu,tearoff=False)
+selection_in = Menu(menu, tearoff=False)
+selection_out = Menu(menu, tearoff=False)
 menu.add_cascade(label="File", menu=fileMenu)
 menu.add_cascade(label="Scan Mode", menu=subMenu)
 # menu.add_cascade(label="Delete", menu=selectionIn)
@@ -309,7 +309,7 @@ def func(event):
             inCount += 1
             inLabel.grid_forget()
             startRowIn = startRowIn + 1
-        mylistIn.insert(0, i )
+        list_in.insert(0, i)
 
        #inLabel.grid(sticky=NSEW, column=0,row=3)#startRowIn
         global inCounter
@@ -342,7 +342,7 @@ def func(event):
             startRowOut = startRowOut + 1
 
         #outLabel.grid(sticky=W, column=7,row=3)#startRowOut
-        mylistOut.insert(0, i )
+        list_out.insert(0, i)
         entry1.delete(0, 'end')
 
         global outCounter
@@ -379,8 +379,8 @@ def deleteIn():
             print("Now Removing")
             scanIn.remove(value)
             # mylistIn.remove(value)
-            print(mylistIn.curselection())
-            mylistIn.delete(mylistIn.curselection())
+            print(list_in.curselection())
+            list_in.delete(list_in.curselection())
 
 
 
@@ -392,7 +392,7 @@ def deleteIn():
             # outCount.update
 
             print(storedOut)
-            print(mylistIn)
+            print(list_in)
             # scanIn.sort
 
 
@@ -408,7 +408,7 @@ def deleteIn():
 try:
     # Selection menu
     # selectionIn.add_command(label="Delete In", command=deleteIn)
-    selectionOut.add_command(label="Delete Out", command=deleteOut)
+    selection_out.add_command(label="Delete Out", command=deleteOut)
 
 
 except:
@@ -428,8 +428,8 @@ def deleteOut():
             print("Now Removing")
             scanOut.remove(value)
             # mylistIn.remove(value)
-            print(mylistOut.curselection())
-            mylistOut.delete(mylistOut.curselection())
+            print(list_out.curselection())
+            list_out.delete(list_out.curselection())
             # mylistTotalOut.insert(0, " ")
             # mylistOut.delete(0, 0)
             # mylistTotalOut.insert(0, "filler")
@@ -447,7 +447,7 @@ def deleteOut():
 
 
             print(storedOut)
-            print(mylistOut)
+            print(list_out)
             # scanIn.sort
 
 
@@ -486,13 +486,13 @@ def deleteOut():
 
 try:
     # Selection menu
-    selectionIn.add_command(label="Delete In", command=deleteIn)
+    selection_in.add_command(label="Delete In", command=deleteIn)
 except:
     pass
 
 try:
     # Selection menu
-    selectionOut.add_command(label="Delete Out", command=deleteOut)
+    selection_out.add_command(label="Delete Out", command=deleteOut)
 except:
     pass
 
@@ -524,23 +524,23 @@ def onDouble(event):
 def do_popupIn(event):
     # display the popup menu
     try:
-        selectionIn.tk_popup(event.x_root, event.y_root, 0)
+        selection_in.tk_popup(event.x_root, event.y_root, 0)
     finally:
         # make sure to release the grab (Tk 8.0a1 only)
-        selectionIn.grab_release()
+        selection_in.grab_release()
 
 def do_popupOut(event):
     # display the popup menu
     try:
-        selectionOut.tk_popup(event.x_root, event.y_root, 0)
+        selection_out.tk_popup(event.x_root, event.y_root, 0)
     finally:
         # make sure to release the grab (Tk 8.0a1 only)
-        selectionOut.grab_release()
+        selection_out.grab_release()
 
 
 try:
-    mylistIn.bind("<Double-Button-1>", onDouble )
-    mylistIn.bind("<Button-3>", do_popupIn)
+    list_in.bind("<Double-Button-1>", onDouble)
+    list_in.bind("<Button-3>", do_popupIn)
 
 except:
     pass
@@ -551,9 +551,9 @@ except:
 #     pass
 
 try:
-    mylistOut.bind("<Double-Button-1>", onDouble )
+    list_out.bind("<Double-Button-1>", onDouble)
 
-    mylistOut.bind("<Button-3>", do_popupOut)
+    list_out.bind("<Button-3>", do_popupOut)
 except:
     pass
 #
